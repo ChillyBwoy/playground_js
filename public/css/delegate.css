@@ -1,0 +1,27 @@
+.container {
+  width: 75%;
+  outline: 1px solid red;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.square {
+  box-sizing: border-box;
+  width: 25%;
+  height: 100px;
+  padding: 10px;
+  display: flex;
+  align-items: stretch;
+}
+
+.inner {
+  background-color: cadetblue;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}

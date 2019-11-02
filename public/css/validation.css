@@ -1,0 +1,35 @@
+.form-field {
+  margin-bottom: 10px;
+}
+
+.form-field input {
+  height: 24px;
+  border: 1px solod #000;
+}
+
+.form-field_error label {
+  color: #f00;
+}
+
+.form-field_error input {
+  border: 1px solid #f00;
+}
+
+.field-errors {
+  margin: 0;
+  padding: 0;
+  color: red;
+  font-size: 0.75rem;
+  box-sizing: border-box;
+  text-align: right;
+  list-style: none;
+}
+
+.form-label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-label_caption {
+  margin-right: 10px;
+}

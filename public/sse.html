@@ -1,0 +1,79 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SSE</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <div id="main">
+    <div>
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
+    </div>
+  </div>
+  <script src="./js/sse.js"></script>
+
+  <script>
+    // Add your JavaScript here// Add your JavaScript here
+    var validateEmail = function (str) {
+      return true;
+    };
+
+    var isRequired = function (str) {
+      return str.trim().length > 0;
+    };
+
+    var validate = function (fields) {
+      var errors = Array.from(fields).reduce((acc, field) => {
+        var value = field.value;
+        var name = field.name;
+        var type = field.type;
+
+        switch (type) {
+          case 'email':
+            if (!validateEmail(value)) {
+              acc[name] = 'Email is invalid';
+            }
+            break;
+
+          default:
+            if (!isRequired(value)) {
+              acc[name] = 'Field "' + name + '" is invalid';
+            }
+            break;
+        }
+
+        return acc;
+      }, {});
+
+      if (Object.keys(errors).length > 0) {
+        return errors;
+      }
+
+      return;
+    }
+
+    var handleSubmit = function (event) {
+      var fields = event.currentTarget.querySelectorAll('input');
+      var isValid = validate(fields);
+
+      if (!isValid) {
+        console.log(errors);
+        event.preventDefault();
+      }
+    };
+
+    document.body.addEventListener('submit', (event) => {
+      if (event.target.dataset.form === 'simple-form') {
+        handleSubmit(event);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

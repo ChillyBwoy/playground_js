@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Form Validation</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/validation.css" />
+</head>
+
+<body>
+  <div id="main">
+    <form novalidate data-type="form">
+      <div class="form-field">
+        <label class="form-label">
+          <div class="form-label_caption">First name</div>
+          <input type="text" name="first_name" data-type="field"
+            data-validate-by="required;minLength(3);maxLength(20)" />
+        </label>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">
+          <div class="form-label_caption">Last name</div>
+          <input type="text" name="last_name" data-type="field"
+            data-validate-by="required;minLength(3);maxLength(20)" />
+        </label>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">
+          <div class="form-label_caption">Age</div>
+          <input type="number" name="age" data-type="field" data-validate-by="required;withinRange(18, 99)" />
+        </label>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">
+          <div class="form-label_caption">Email*</div>
+          <input type="email" name="email" data-type="field" data-validate-by="required;email" />
+        </label>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">
+          <div class="form-label_caption">Your country</div>
+          <select name="country" data-type="field" data-validate-by="required">
+            <option value="">Please select your country</option>
+            <option value="nl">Netherlands</option>
+            <option value="ru">Russia</option>
+            <option value="uk">United Kingdom</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">
+          <div class="form-label_caption">Password*</div>
+          <input type="password" name="password" data-type="field"
+            data-validate-by="required;minLength(6);maxLength(30);matchField(password_confirm)" />
+        </label>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">
+          <div class="form-label_caption">Pasword confirmation</div>
+          <input type="passowrd" name="password_confirm" data-type="field"
+            data-validate-by="required;minLength(6);maxLength(30);matchField(password)" />
+        </label>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">
+          <div class="form-label_caption">I agree with EULA</div>
+          <input type="checkbox" name="agree" data-type="field" data-validate-by="required" />
+        </label>
+      </div>
+
+      <div class="form-field">
+        <button type="submit">Send</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="./js/validation.js"></script>
+</body>
+
+</html>
