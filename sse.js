@@ -6,7 +6,7 @@ function onDigits(req, res) {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream; charset=utf-8',
     'Cache-Control': 'no-cache',
-    'Access-Control-Allow-Origin': 'http://localhost:5000',
+    'Access-Control-Allow-Origin': 'http://localhost:1234',
     'Access-Control-Expose-Headers': '*',
     'Access-Control-Allow-Credentials': true,
   });

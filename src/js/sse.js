@@ -1,3 +1,5 @@
+import '../css/style.css';
+
 let eventSource
 
 function log(...msg) {
@@ -8,8 +10,9 @@ const handleOpen = (e) => {
   log("open");
 };
 
-const handleError = (e) => {
+const handleError = (error) => {
   log("Error");
+  console.error(error)
   // if (this.readyState == EventSource.CONNECTING) {
   //   log(`Переподключение (readyState=${this.readyState})...`);
   // } else {
