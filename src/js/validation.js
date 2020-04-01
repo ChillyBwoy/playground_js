@@ -54,6 +54,9 @@ const parseValidators = (str) => {
   return tokens.map(token => {
     const [name, paramsStr] = token.split(/\(|\)/);
     const params = paramsStr ? paramsStr.split(',').map(x => x.trim()) : [];
+
+    console.log(token, '\nname:', name, '\nargs:', paramsStr);
+
     if (!VALIDATORS[name]) {
       throw new Error(`Invalid validator "${name}"`);
     }
