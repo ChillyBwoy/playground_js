@@ -9,18 +9,28 @@ $table.addEventListener('mouseover', (event) => {
   if (currentElem) {
     return;
   }
-  let target = event.target;
-  // target = target.closest('td');
 
+  let target = event.target;
+
+  /**
+   * Эквивалент `target = target.closest('td');`
+   */
   while (target !== null && target.tagName !== 'TD') {
     target = target.parentNode;
   }
+
   // переход не на <td> - игнорировать
   if (!target) {
     return;
   }
 
-  // ура, мы зашли на новый <td>
+  /**
+   * Кейс для вложенных таблиц
+   */
+  if (!$table.contains(target)) {
+    return;
+  }
+
   currentElem = target;
   target.style.background = 'pink';
 });
@@ -48,3 +58,10 @@ $table.addEventListener('mouseout', (event) => {
   currentElem.style.background = '';
   currentElem = null;
 });
+
+$table.addEventListener('mouseenter', (event) => {
+  console.log('enter', event.eventPhase);
+}, true);
+$table.addEventListener('mouseleave', (event) => {
+  console.log('leave', event.eventPhase);
+}, true);

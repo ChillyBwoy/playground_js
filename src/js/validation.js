@@ -11,7 +11,7 @@ const VALIDATORS = {
 
   email(formData, name) {
     const value = formData.get(name);
-    if (!/^[a-zA-Z0-9]+\@[a-zA-Z0-9]+\.[a-zA-Z]+$/.test(value.trim())) {
+    if (!/^[a-zA-Z0-9\.-_]+\@[a-zA-Z0-9]+\.[a-zA-Z]+$/.test(value.trim())) {
       return `Invalid email "${value}" in field "${name}"`;
     }
   },
@@ -66,13 +66,16 @@ const parseValidators = (str) => {
   });
 };
 
-const handleFormSubmit = (event) => {
-  const { target } = event;
+const highlightErrors = ($form) => {
+
+};
+
+const tokenValidation = ($form) => {
   const errors = new Map();
 
-  const formData = new FormData(target);
+  const formData = new FormData($form);
 
-  target.querySelectorAll('.form-field').forEach($field => {
+  $form.querySelectorAll('.form-field').forEach($field => {
     const $el = $field.querySelector('[data-type="field"]');
     if (!$el) {
       return;
@@ -129,9 +132,75 @@ const handleFormSubmit = (event) => {
   });
 };
 
+const VALIDATORS_PLAIN = {
+  'first_name': [
+    (name, formData) => VALIDATORS.required(formData, name),
+    (name, formData) => VALIDATORS.minLength(formData, name, 3),
+    (name, formData) => VALIDATORS.maxLength(formData, name, 20),
+  ],
+  'last_name': [
+    (name, formData) => VALIDATORS.required(formData, name),
+    (name, formData) => VALIDATORS.minLength(formData, name, 3),
+    (name, formData) => VALIDATORS.maxLength(formData, name, 20),
+  ],
+  'age': [
+    (name, formData) => VALIDATORS.required(formData, name),
+    (name, formData) => VALIDATORS.withinRange(formData, name, 18, 99),
+  ],
+  'email': [
+    (name, formData) => VALIDATORS.required(formData, name),
+    (name, formData) => VALIDATORS.email(formData, name),
+  ],
+  'country': [
+    (name, formData) => VALIDATORS.required(formData, name),
+  ],
+  'password': [
+    (name, formData) => VALIDATORS.required(formData, name),
+    (name, formData) => VALIDATORS.minLength(formData, name, 6),
+    (name, formData) => VALIDATORS.maxLength(formData, name, 30),
+    (name, formData) => VALIDATORS.matchField(formData, name, 'password_confirm'),
+  ],
+  'password_confirm': [
+    (name, formData) => VALIDATORS.required(formData, name),
+    (name, formData) => VALIDATORS.minLength(formData, name, 6),
+    (name, formData) => VALIDATORS.maxLength(formData, name, 30),
+    (name, formData) => VALIDATORS.matchField(formData, name, 'password'),
+  ],
+  'agree': [
+    (name, formData) => VALIDATORS.required(formData, name),
+  ],
+};
+
+const plainValidation = ($form) => {
+  const errors = new Map();
+  const formData = new FormData($form);
+
+  Object.keys(VALIDATORS_PLAIN).forEach(fieldName => {
+    const fieldValidators = VALIDATORS_PLAIN[fieldName];
+
+    const fieldErrors = [];
+    for (const validator of fieldValidators) {
+      const maybeError = validator(fieldName, formData);
+      if (typeof maybeError !== 'undefined') {
+        fieldErrors.push(maybeError);
+      }
+    }
+
+    console.log(fieldName, fieldErrors)
+
+  });
+
+}
+
+const handleFormSubmit = ($form) => {
+  // tokenValidation($form);
+  plainValidation($form);
+};
+
 document.addEventListener('submit', (event) => {
   const { target } = event;
   if (target.dataset.type === 'form') {
-    handleFormSubmit(event);
+    event.preventDefault()
+    handleFormSubmit(target);
   }
 });

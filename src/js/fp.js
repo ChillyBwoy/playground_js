@@ -33,7 +33,7 @@ import throttle from 'lodash/throttle';
     let timer = null;
     let lastCall = null;
 
-    return function throttleWrapper(...args) {
+    function wrapper(...args) {
       const context = this;
       const now = Date.now();
 
@@ -48,6 +48,14 @@ import throttle from 'lodash/throttle';
         fn.apply(context, args);
       }
     }
+
+    wrapped.cancel = () => {
+      if (timer !== null) {
+        clearTimeout(timer);
+      }
+    };
+
+    return wrapper;
   }
 
   const $test1 = document.getElementById('test1');

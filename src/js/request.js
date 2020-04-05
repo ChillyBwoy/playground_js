@@ -30,8 +30,8 @@
           case 4: {
             // DONE
             if (xhr.status >= 200 && xhr.status < 300) {
-              const data = JSON.parse(this.responseText);
-              resolve(data);
+              const json = JSON.parse(this.responseText);
+              resolve(json);
             } else {
               console.warn(this.responseText);
               reject();
