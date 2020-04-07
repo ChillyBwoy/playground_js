@@ -27,6 +27,16 @@ class EventEmitter {
     return this;
   }
 
+  subscribe(eventName, subscriber) {
+    this.listeners[eventName] = this.listeners[eventName] || [];
+    this.listeners[eventName].push(subscriber);
+    const index = this.listeners[eventName].length - 1;
+
+    return () => {
+      this.off(eventName, subscriber);
+    };
+  }
+
   off(eventName, subscriber) {
     if (!this.listeners[eventName]) {
       return this;
@@ -53,11 +63,11 @@ class EventEmitter {
 const myEmitter = new EventEmitter();
 
 function c1() {
-  console.log('an event occurred!');
+  console.log('c1: an event occurred!');
 }
 
 function c2() {
-  console.log('yet another event occurred!');
+  console.log('c2: yet another event occurred!');
 }
 
 myEmitter.on('eventOne', c1); // Register for eventOne
@@ -71,6 +81,10 @@ myEmitter.once('init', () => console.log('init once fired'));
 myEmitter.on('status', (code, msg) => console.log(`Got ${code} and ${msg}`));
 
 
+const unsubscribeSample = myEmitter.subscribe('eventOne', (x) => {
+  console.log('subs');
+})
+
 myEmitter.emit('eventOne');
 
 // Emit 'eventOnce' -> After this the eventOnce will be 
@@ -82,7 +96,16 @@ myEmitter.emit('eventOne');
 myEmitter.emit('init');
 myEmitter.emit('init'); // Will not be fired
 myEmitter.emit('eventOne');
+
+myEmitter.off('eventOne', c2);
+unsubscribeSample();
+
+myEmitter.emit('eventOne');
+myEmitter.emit('eventOne');
+myEmitter.emit('eventOne');
+myEmitter.emit('eventOne');
 myEmitter.emit('status', 200, 'ok');
 
 // Get listener's count
 console.log(myEmitter.count('event1'));
+
