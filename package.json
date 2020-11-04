@@ -15,5 +15,8 @@
   "scripts": {
     "start": "yarn parcel ./src/html/*.html",
     "generate": "node bin/generate.js"
+  },
+  "dependencies": {
+    "rxjs": "^6.5.5"
   }
 }
